@@ -87,6 +87,8 @@ def export_xml(data: list):
     xml_footer = """
     </AF_Catalog>"""
 
+    # code block only useful for local file run
+    """
     with open("./xml_export.xml", "w") as file:
         file.write(xml_header)
 
@@ -94,9 +96,19 @@ def export_xml(data: list):
             file.write(convert_row(row))
 
         file.write(xml_footer)
+    """
+
+    file_data = xml_header
+
+    for row in data:
+        file_data += convert_row(row)
+
+    file_data += xml_footer
+
+    return file_data
 
 
-def export_xml_with_x_rows(data: list, rows: int = 1):
+def export_xml_with_x_rows(data: list, row_count: int = 1):
     """
     Takes in a matrix of data and exports it as an XML file, but only with x amount of rows
 
@@ -111,6 +123,8 @@ def export_xml_with_x_rows(data: list, rows: int = 1):
     xml_footer = """
     </AF_Catalog>"""
 
+    # code block only useful for local file run
+    """
     with open("./xml_export.xml", "w") as file:
         file.write(xml_header)
 
@@ -120,3 +134,17 @@ def export_xml_with_x_rows(data: list, rows: int = 1):
             counter += 1
 
         file.write(xml_footer)
+
+        file_data = xml_header
+    """
+
+    file_data = xml_header
+    counter = 0
+
+    while counter < row_count:
+        file_data += convert_row(data[counter])
+        counter += 1
+
+    file_data += xml_footer
+
+    return file_data

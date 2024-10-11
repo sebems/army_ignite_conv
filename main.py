@@ -5,6 +5,8 @@ from xml_conversion import export_xml
 
 st.title("CSV to XML Conversion")
 
+export_file = ''
+
 uploaded_file = st.file_uploader("Upload CSV File", type="csv")
 if uploaded_file is not None:
     match uploaded_file.type:
@@ -15,7 +17,7 @@ if uploaded_file is not None:
                 )
                 st.write(csv_df)
 
-                export_xml(csv_df.values.tolist())
+                export_file = export_xml(csv_df.values.tolist())
             except Exception as err:
                 st.error(type(err))  # the exception type
                 st.error(err.args)  # arguments stored in .args
@@ -28,7 +30,7 @@ if uploaded_file is not None:
 
 st.divider()
 
-with open("xml_export.xml", "r") as export_file:
-    st.download_button(
-        "Download File", data=export_file, file_name="xml_export.xml", mime="text/xml"
-    )
+
+st.download_button(
+    "Download File", data=export_file, file_name="xml_export.xml", mime="text/xml"
+)
